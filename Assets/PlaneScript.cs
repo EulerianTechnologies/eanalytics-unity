@@ -52,11 +52,20 @@ public class PlaneScript : MonoBehaviour
     {
         Debug.Log("Object exit the trigger");
 
-        EAProperties prop = new EAProperties("plane/exit");
+        EACart prop = new EACart("plane/exit");
         prop.SetNewCustomer(false);
-        Action action = new Action();
-        action.AddOut(new string[] { "out 2", "out 3" });
-        prop.SetAction(action);
+        prop.SetUID("udid-test");
+        prop.SetCartCumul(true);
+
+        Product p1 = new Product("ref-p1");
+        p1.SetName("p1");
+        p1.SetGroup("alimentaire");
+        prop.AddProduct(p1, 2, 2);
+
+        Product p2 = new Product("ref-p2");
+        p2.SetName("p2");
+        p2.SetGroup("alimentaire");
+        prop.AddProduct(p2, 0.4, 1);
 
         Eulerian.Track(prop);
     }
