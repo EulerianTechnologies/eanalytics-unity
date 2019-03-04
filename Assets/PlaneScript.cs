@@ -7,7 +7,7 @@ public class PlaneScript : MonoBehaviour
 {
     private void Awake()
     {
-        Eulerian.Init("ett.eulerian.net");
+        Eulerian.Init("et11.eulerian.net");
     }
 
     // Start is called before the first frame update
