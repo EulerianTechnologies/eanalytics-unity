@@ -9,6 +9,8 @@ namespace eulerian
 
     public class Eulerian : Singleton<Eulerian>
     {
+
+        private static readonly string KEY_SAVED_PAYLOAD = "unsync-eaprops";
         private string domain = "";
 
         // Prevent non-singleton constructor use.
@@ -40,6 +42,16 @@ namespace eulerian
                         EAProperties.ADID = advertisingId;
                     });
             }
+            // Find EAProperties in storage
+            var untracked = PlayerPrefs.GetString(KEY_SAVED_PAYLOAD, null);
+            if (!string.IsNullOrEmpty(untracked))
+            {
+                PlayerPrefs.DeleteKey(KEY_SAVED_PAYLOAD); // untracked props will be saved (again) if upload failed.
+                PlayerPrefs.Save();
+                JSONArray json = (JSONArray)JSONNode.Parse(untracked);
+                Debug.Log(json.Count + " EAProperties found in storage. Will try to sync.");
+                Instance.PostData(json);
+            }
         }
 
         public static bool IsInitialized()
@@ -62,15 +74,22 @@ namespace eulerian
 
         public void PostData(EAProperties properties)
         {
-            StartCoroutine(Upload(properties));
+            JSONArray json = new JSONArray();
+            json.Add(properties.ToJSON());
+            StartCoroutine(Upload(json));
         }
 
-        IEnumerator Upload(EAProperties properties)
+        public void PostData(JSONArray json)
+        {
+            StartCoroutine(Upload(json));
+        }
+
+        IEnumerator Upload(JSONArray data)
         {
             DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             int now = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
 
-            var jsonString = properties.ToJSON().ToString();
+            var jsonString = data.ToString();
             var url = "https://" + Instance.domain + "/collectorjson-unity/-/" + now;
             Debug.Log("Eulerian Analytics POST:\n- URL: " + url + "\n- data: " + jsonString);
 
@@ -85,7 +104,8 @@ namespace eulerian
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(www.error);
+                Debug.LogError("Data upload failed with error: " + www.error);
+                Save(data);
             }
             else
             {
@@ -93,6 +113,27 @@ namespace eulerian
             }
         }
 
+        private void Save(JSONArray data)
+        {
+            var stored = PlayerPrefs.GetString(KEY_SAVED_PAYLOAD, null);
+            JSONArray storageJson = null;
+            if (string.IsNullOrEmpty(stored))
+            {
+                Debug.Log("Failed to send EAProperties. Will retry later.");
+                storageJson = data;
+            }
+            else
+            {
+                storageJson = (JSONArray)JSONNode.Parse(stored);
+                Debug.Log("Failed to send EAProperties (with " + storageJson.Count + " others EAProperties). Will retry later.");
+                foreach (var item in data.Values.GetEnumerator())
+                {
+                    storageJson.Add(item);
+                }
+            }
+            PlayerPrefs.SetString(KEY_SAVED_PAYLOAD, storageJson.ToString());
+            PlayerPrefs.Save();
+        }
     }
 
 }
