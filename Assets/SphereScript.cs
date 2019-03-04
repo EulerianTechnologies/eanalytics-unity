@@ -14,8 +14,10 @@ public class SphereScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EAEstimate prop = new EAEstimate("sphere/enter", "ref");
+        EAOrder prop = new EAOrder("sphere/enter", "ref");
         prop.SetCurrency("GBP");
+        prop.SetPayment("payment-val");
+        prop.SetEstimateRef("ref-estimate");
 
         Product product = new Product("Ref-nut");
         product.SetName("Nut");
