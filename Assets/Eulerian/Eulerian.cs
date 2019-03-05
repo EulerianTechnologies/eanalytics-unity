@@ -9,6 +9,7 @@ namespace eulerian
 
     public class Eulerian : Singleton<Eulerian>
     {
+        internal static readonly string SDK_VERSION = "1.0.0";
 
         private static readonly string KEY_SAVED_PAYLOAD = "unsync-eaprops";
         private string domain = "";

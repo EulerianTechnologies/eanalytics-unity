@@ -15,6 +15,7 @@ namespace eulerian
         private static readonly string KEY_EPOCH = "ereplay-time";
         private static readonly string KEY_APP_VERSION = "ea-appversion";
         private static readonly string KEY_ADID = "ea-unity-adid";
+        private static readonly string KEY_SDK_VERSION = "ea-unity-sdk-version";
 
         // Page params
         private static readonly string KEY_PAGE_LATITUDE = "ea-lat";
@@ -52,6 +53,7 @@ namespace eulerian
             jsonObject[KEY_URL] = "http://" + Application.identifier;
             jsonObject[KEY_APPNAME] = Application.productName;
             jsonObject[KEY_APP_VERSION] = Application.unityVersion;
+            jsonObject[KEY_SDK_VERSION] = Eulerian.SDK_VERSION;
 
             if (!string.IsNullOrEmpty(ADID))
             {
