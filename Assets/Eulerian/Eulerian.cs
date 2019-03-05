@@ -30,6 +30,16 @@ namespace eulerian
             {
                 Debug.LogError("Domain is not well formed.");
             }
+            if (string.IsNullOrEmpty(EAProperties.ADID))
+            {
+                Debug.Log("Request Advertising Identifier Async...");
+                Application.RequestAdvertisingIdentifierAsync(
+                    (string advertisingId, bool trackingEnabled, string error) =>
+                    {
+                        Debug.Log("advertisingId " + advertisingId + " " + trackingEnabled + " " + error);
+                        EAProperties.ADID = advertisingId;
+                    });
+            }
         }
 
         public static bool IsInitialized()
@@ -42,27 +52,25 @@ namespace eulerian
             return true;
         }
 
-        public static void Track(string eventName)
+        public static void Track(EAProperties properties)
         {
             if (!IsInitialized()) return;
-            Debug.Log("Let's track " + eventName + " @domain: " + Instance.domain);
-            Instance.PostData(eventName);
+            if (properties == null) Debug.Log("Cannot track null properties.");
+            Debug.Log("Tracking " + properties + " @domain: " + Instance.domain);
+            Instance.PostData(properties);
         }
 
-        public void PostData(string eventName)
+        public void PostData(EAProperties properties)
         {
-            StartCoroutine(Upload(eventName));
+            StartCoroutine(Upload(properties));
         }
 
-        IEnumerator Upload(string eventName)
+        IEnumerator Upload(EAProperties properties)
         {
-            JSONObject json = new JSONObject();
-            json["event"] = eventName;
-
             DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             int now = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
 
-            var jsonString = json.ToString();
+            var jsonString = properties.ToJSON().ToString();
             var url = "https://" + Instance.domain + "/collectorjson-unity/-/" + now;
             Debug.Log("Eulerian Analytics POST:\n- URL: " + url + "\n- data: " + jsonString);
 
