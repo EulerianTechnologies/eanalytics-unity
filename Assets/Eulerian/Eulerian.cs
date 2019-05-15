@@ -3,13 +3,14 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 using System;
+using UnityEngine.Analytics;
 
 namespace eulerian
 {
 
     public class Eulerian : Singleton<Eulerian>
     {
-        internal static readonly string SDK_VERSION = "1.0.0";
+        internal static readonly string SDK_VERSION = "1.1.0";
 
         private static readonly string KEY_SAVED_PAYLOAD = "unsync-eaprops";
         private string domain = "";
@@ -53,6 +54,11 @@ namespace eulerian
                 Debug.Log(json.Count + " EAProperties found in storage. Will try to sync.");
                 Instance.PostData(json);
             }
+        }
+
+        public static String getEuidl()
+        {
+            return SystemInfo.deviceUniqueIdentifier;
         }
 
         public static bool IsInitialized()

@@ -49,7 +49,7 @@ namespace eulerian
         {
             jsonObject[KEY_EOS] = SystemInfo.operatingSystem;
             jsonObject[KEY_EHW] = SystemInfo.deviceModel;
-            jsonObject[KEY_EUIDL] = SystemInfo.deviceUniqueIdentifier;
+            jsonObject[KEY_EUIDL] = Eulerian.getEuidl();
             jsonObject[KEY_URL] = "http://" + Application.identifier;
             jsonObject[KEY_APPNAME] = Application.productName;
             jsonObject[KEY_APP_VERSION] = Application.unityVersion;
