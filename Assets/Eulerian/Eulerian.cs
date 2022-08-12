@@ -109,7 +109,7 @@ namespace eulerian
 
             yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("Data upload failed with error: " + www.error);
                 Save(data);
