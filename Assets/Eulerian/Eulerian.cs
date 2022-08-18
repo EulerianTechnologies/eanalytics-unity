@@ -55,7 +55,7 @@ namespace eulerian
             }
         }
 
-        public static string getEuidl()
+        public static string GetEuidl()
         {
             return SystemInfo.deviceUniqueIdentifier;
         }
