@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace eulerian
+﻿namespace eulerian
 {
     public class EACart : EAProperties
     {
@@ -10,7 +8,7 @@ namespace eulerian
         private readonly static string KEY_QUANTITY = "quantity";
         private readonly static string KEY_PRODUCTS = "products";
 
-        internal readonly JSONArray products = new JSONArray();
+        internal readonly JSONArray products = new();
 
         public EACart(string path) : base(path)
         {

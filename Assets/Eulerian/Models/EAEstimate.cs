@@ -1,5 +1,4 @@
-﻿using System;
-namespace eulerian
+﻿namespace eulerian
 {
     public class EAEstimate : EAProperties
     {
@@ -12,7 +11,7 @@ namespace eulerian
         private static readonly string KEY_PRODUCT_AMOUNT = "amount";
         private static readonly string KEY_QUANTITY = "quantity";
 
-        internal readonly JSONArray products = new JSONArray();
+        internal readonly JSONArray products = new();
 
         public EAEstimate(string path, string reference) : base(path)
         {

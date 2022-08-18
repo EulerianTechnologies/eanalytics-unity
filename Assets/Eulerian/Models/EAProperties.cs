@@ -32,7 +32,7 @@ namespace eulerian
 
         public static string ADID { get; internal set; }
 
-        internal readonly JSONObject json = new JSONObject();
+        internal readonly JSONObject json = new();
 
         public EAProperties(string path)
         {
@@ -49,7 +49,7 @@ namespace eulerian
         {
             jsonObject[KEY_EOS] = SystemInfo.operatingSystem;
             jsonObject[KEY_EHW] = SystemInfo.deviceModel;
-            jsonObject[KEY_EUIDL] = Eulerian.getEuidl();
+            jsonObject[KEY_EUIDL] = Eulerian.GetEuidl();
             jsonObject[KEY_URL] = "http://" + Application.identifier;
             jsonObject[KEY_APPNAME] = Application.productName;
             jsonObject[KEY_APP_VERSION] = Application.unityVersion;
@@ -60,7 +60,7 @@ namespace eulerian
                 jsonObject[KEY_ADID] = ADID;
             }
 
-            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             int cur_time = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
             jsonObject[KEY_EPOCH] = cur_time;
         }

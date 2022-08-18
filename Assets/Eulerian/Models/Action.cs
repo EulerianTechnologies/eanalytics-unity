@@ -1,7 +1,4 @@
-﻿using System;
-using eulerian;
-
-namespace eulerian
+﻿namespace eulerian
 {
     public class Action
     {
@@ -9,7 +6,7 @@ namespace eulerian
         internal static readonly string KEY_IN = "in";
         private static readonly string KEY_OUT = "out";
 
-        internal readonly JSONObject json = new JSONObject();
+        internal readonly JSONObject json = new();
 
         public void SetReference(string reference)
         {
@@ -23,7 +20,7 @@ namespace eulerian
 
         public void AddOut(string[] outsValue)
         {
-            JSONArray array = new JSONArray();
+            JSONArray array = new();
             foreach (string value in outsValue) {
                 array.Add(value);
             }

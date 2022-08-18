@@ -1,5 +1,4 @@
-﻿using System;
-namespace eulerian
+﻿namespace eulerian
 {
     public class EAOrder : EAEstimate
     {

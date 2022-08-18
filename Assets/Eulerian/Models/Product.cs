@@ -7,7 +7,7 @@
         private static readonly string KEY_PARAMS = "params";
         private static readonly string KEY_GROUP = "group";
 
-        internal readonly JSONObject json = new JSONObject();
+        internal readonly JSONObject json = new();
 
         public Product(string reference)
         {

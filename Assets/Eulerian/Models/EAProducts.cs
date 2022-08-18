@@ -4,7 +4,7 @@
     {
         private static readonly string KEY_PRODUCTS = "products";
 
-        private readonly JSONArray products = new JSONArray();
+        private readonly JSONArray products = new();
 
         public EAProducts(string path) : base(path)
         {

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Text;
 using System;
-using UnityEngine.Analytics;
 
 namespace eulerian
 {
@@ -56,7 +55,7 @@ namespace eulerian
             }
         }
 
-        public static String getEuidl()
+        public static string getEuidl()
         {
             return SystemInfo.deviceUniqueIdentifier;
         }
@@ -81,7 +80,7 @@ namespace eulerian
 
         public void PostData(EAProperties properties)
         {
-            JSONArray json = new JSONArray();
+            JSONArray json = new();
             json.Add(properties.ToJSON());
             StartCoroutine(Upload(json));
         }
@@ -93,7 +92,7 @@ namespace eulerian
 
         IEnumerator Upload(JSONArray data)
         {
-            DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime epochStart = new(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             int now = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
 
             var jsonString = data.ToString();
@@ -123,7 +122,7 @@ namespace eulerian
         private void Save(JSONArray data)
         {
             var stored = PlayerPrefs.GetString(KEY_SAVED_PAYLOAD, null);
-            JSONArray storageJson = null;
+            JSONArray storageJson;
             if (string.IsNullOrEmpty(stored))
             {
                 Debug.Log("Failed to send EAProperties. Will retry later.");

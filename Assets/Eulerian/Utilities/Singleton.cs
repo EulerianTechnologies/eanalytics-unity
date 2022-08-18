@@ -10,7 +10,7 @@ namespace eulerian {
     {
         // Check to see if we're about to be destroyed.
         private static bool m_ShuttingDown = false;
-        private static object m_Lock = new object();
+        private static readonly object m_Lock = new();
         private static T m_Instance;
 
         /// <summary>

@@ -7,7 +7,7 @@
         private static readonly string KEY_PARAMS = "params";
         private static readonly string KEY_SEARCH_ENGINE = "isearchengine";
 
-        internal readonly JSONObject jsonEngine = new JSONObject();
+        internal readonly JSONObject jsonEngine = new();
 
         public EASearch(string path, string name) : base(path)
         {
